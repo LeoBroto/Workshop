@@ -1,14 +1,4 @@
-# Bem vindos ao Workshop de Bioinformática do IV Curso de Genética no Verão (USP)
-Criado por Felipe S. Salles 
-
-Assitents: Sophia Pereira Saraiva e Bruno J. Teixeira de Melo
-***
-### Introdução os tipos de arquivos
-* Power-point
-
----
-### Por onde começar
-Maiores bancos de dados para Bioinformática
+### Maiores bancos de dados para Bioinformática
 | Tipo de arquivos | Nome do banco de dados | Conteudo | website |
 |------------------------|:------------------------------:|---------------------------------------------------------------------------:|-------------------------------------:|
 | Genome & Sequence Databases | NCBI (GenBank/RefSeq/dbSNP) | DNA/RNA sequences, reference genomes, variants, and literature | [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)|
