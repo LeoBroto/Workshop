@@ -1,7 +1,7 @@
 # Workshop de Bioinformática do IV Curso de Genética no Verão (USP)
 Criado por Felipe S. Salles | Linkedin | Lattes
 
-Assitents: Sophia Pereira Saraiva e Bruno J. Teixeira de Melo
+Assitentes: Sophia Pereira Saraiva e Bruno J. Teixeira de Melo
 ***
 #### Bem vindo ao mini tutorial do Workshop
 ###### Após a breve explicação sobre tipo de arquivos e abordagens de tipos de estudos, vamos iniciar o aprendizado do "terminal"
@@ -82,7 +82,7 @@ $ info [comando]
 $ [comando] --help
 ```
 
-Agora inspecionaremos o arquivo fasta com um pouco mais de detalhes. Contaremos quantas sequencias há no arquivo `fasta`. Cada início de sequência tem seu cabeçalho iniciado por '>' e na linha de baixo o conteudo da sequência. Iremos tambem calcular quantas linhas INICIAM com o aminoacido `Metionina` e a quantidade de linhas totais no arquivo. E ai qual o resultado? Discuta o por quê disso.
+Agora inspecionaremos o arquivo fasta com um pouco mais de detalhes. Contaremos quantas sequencias há no arquivo `fasta`. Cada início de sequência tem seu cabeçalho iniciado por `>___` e na linha de baixo o conteudo da sequência. Iremos tambem calcular quantas linhas INICIAM com o aminoacido `Metionina` e a quantidade de linhas totais no arquivo. E ai qual o resultado? Discuta o por quê disso.
 
 ```
 $ grep -c ">" eukaria_protein.fasta
@@ -106,7 +106,7 @@ $ wc -l eukaria_protein.fasta
 
 O primeiro comando conta automaticamente o numero de linhas que apresentam o sinal '>' e o segundo comando seleciona as linhas que apresentam '>' - ou seja, ele seleciona os 'headers', e DEPOIS conta o número de linhas total do comando anterior. Só é possivel isso pois utilizamos o 'pipe' `|` - significa 'tubo'  ou 'cano' - portanto o resultado (output) do `grep` entra em um cano e segue automaticametne para o proximo comando.
 
-Agora inspecione com `cat` e `tac` os arquivos `*.sh` (**Shell**). Pode observar que ambos tem um cabeçalho único: `#!/bin/bash`.
+Agora inspecione com `cat` os arquivos `*.sh` (**Shell**). Pode observar que ambos tem um cabeçalho único: `#!/bin/bash`.
 Esta linha exige que o arquivo seja lido pelo computador de um jeito especial. E isso trasnforma os arquivos textos em "scripts".
 ***
 #### Baixar os arquivos
