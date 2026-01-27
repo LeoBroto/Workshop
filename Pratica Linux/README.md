@@ -7,9 +7,9 @@ Assitentes: Sophia Pereira Saraiva e Bruno J. Teixeira de Melo
 ###### Após a breve explicação sobre tipo de arquivos e abordagens de tipos de estudos, vamos iniciar o aprendizado do "terminal"
 
 
-Para começar iremos introduzir o terminal e a linguagem Bash/Linux. O terminal de um computador é a área onde conversamos com o computador sem a interface gráfica - portanto não utilizamos mouse para mover os arquivos, ou clicar neles -, permitindo usar scripts e comandos básicos para realizar as tarefas computacionais.
+Para começar iremos introduzir o terminal e a linguagem Bash/Linux. O terminal de um computador é a área onde conversamos com o computador sem a interface gráfica (portanto não utilizamos mouse para mover os arquivos ou clicar neles), permitindo usar scripts e comandos básicos para realizar as tarefas computacionais.
 
-Para quem possiu o sistema Linux basta apertar Ctrl + Alt + 'T' . E para outros sistemas operacionais há aplicativos ou outras interfaces:
+Para quem possiu o sistema Linux basta apertar `Ctrl` + `Alt` + `T` . E para outros sistemas operacionais há aplicativos ou outras interfaces:
 
 **Windows:** WSL, Ubunto e Xmobe
 
@@ -29,7 +29,7 @@ $ ls
 programas tutorial_workshop
 ```
 
-Veja a diferença utilizando as opções `-l`, `-a`, `-h`, `-s`
+Veja a diferença utilizando as opções `-l`, `-a`, `-h`, `-s`. Pode fazer combinação entre todas elas.
 ```
 $ ls -l
 $ ls -lh
@@ -49,7 +49,7 @@ $ ls tutorial_workshop
 catch_genes.sh eukaria_protein.fasta transform_single_line_fasta.sh 
 ```
 
-> Se quiser pode usar o mesmo comando no outro diretório para ver qual o conteudo.,
+> Se quiser pode usar o mesmo comando no outro diretório para ver qual o conteudo, pode se usar.
 
 Agora entramemos no `diretório` chamado `tutorial_workshop`. Se fosse um computador com interface gráfica você clicaria duas vezes na pasta para entrar nela mas no nosso caso será em linha de comando, ao mesmo tempo que já mostraremos o conteudo dela. So é possivel por conta do `;`, que entende que isso seria uma linha nova:
 ``` 
