@@ -202,8 +202,21 @@ Após o alinhamento, as posições
 #### Construção de uma árvore por similaridade (IQTree)
 Próximo passo iremos ver o quão relacionada estão essas sequências através da similaridade que eles apresentam . O programa novamente esta [baixado](https://iqtree.github.io/) e só deveremos rodar a linha de comando. Este programa necessita um arquivo fasta alinhado globalmente, gerado pelo `mafft`. Poderiam ter usado outros programas para alinhamento, mas alguns não gerão o arquivo fasta.
 
-
+| Programas que alinham | Tipo de arquivo gerado | website |
+|:-----------------------|:-------------------------:|:---------------------------------------------------------------:|
+| HyPhy | fasta | [https://hyphy.org/](https://hyphy.org/)|
+| MEGA | fasta | [https://megasoftware.net/docs](https://megasoftware.net/web_help_12/index.htm#t=Part_I_Getting_Started%2FA_Walk_Through_MEGA%2FAligning_Sequences.htm%23bc-1&rhtocid=_7_3_1)|
+| MACSE | fasta | [https://www.agap-ge2pop.org/macse/](https://www.agap-ge2pop.org/alignsequences/)|
+| MUSCLE | clustal | [https://www.drive5.com/muscle/](https://www.drive5.com/muscle5/manual/getting_started.html)|
+| MINIMAP2 | sam | [https://github.com/lh3/minimap2](https://github.com/lh3/minimap2)|
 
 ```
 $ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -i *.aligned.fasta -o 
 ```
+Agora verifique os outputs , utilize os comandos que você ja aprendeu `ls`, `cat`, `head`, `more`, `wc`...
+
+***
+#### Observar a árvore (iTol)
+Após verificar a árvore, pode dar um "print" nela com `cat` e copiar e colar em algum software pare visualização.
+Entre no site [iTol](https://itol.embl.de/)
+Entre no "Upload a tree" e cole no espaço adqueado.
