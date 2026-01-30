@@ -138,7 +138,7 @@ $ mv [nome_antigo] [nome_novo]
 $ mv [arquivo] -t [diretório]
 ```
 ***
-#### Alinhamento local
+#### Alinhamento local (BLAST)
 Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) diretamente no computador com o comando `wget`), para alinhar as proteínas que queremos adquirir com a proteína alvo. Nesta etapa vale a pena e pesquisar e [ler um pouco sobre](https://pmc.ncbi.nlm.nih.gov/articles/PMC441573/). Utilizaremos o comando `blastp` para alinhar proteína com todas as outras proteínas.
 
 ```
@@ -163,16 +163,47 @@ $ awk '{print $2}' BLAST-[protein].out | uniq > list_of_sequences.txt
 $ wc -l list_of_sequences.txt
 30
 ```
-Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt` pela sua lista `list_of_sequences.txt`. E depois 
+Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt` pela sua lista `list_of_sequences.txt` e o `[output].fasta` por `sequencies_of_[protein].fasta`. E depois rodar o script. Para rodar o tem que se utilizar `./`.
+
+🕯️ Relembre que para sair do `nano` utilize `Ctrl` + `X` => y 
 ```
 $ nano catch_genes.sh
+$ ./catch_genes.sh
+Sequencies in 574627
+Search in 30 found 30
+$ ls -h sequencies_of_[protein].fasta; grep -c '>' sequencies_of_[protein].fasta; grep -c '^M' sequencies_of_[protein].fasta; wc -l sequencies_of_[protein].fasta; head sequencies_of_[protein].fasta
 ```
 
 
 ***
-#### Alinhamento global
-Após a seleção dessas sequências
+#### Alinhamento global (MAFFT)
+Após a seleção dessas sequências, vamos fazer o alinhamento de todas elas aminoácido por aminoácido. E o que isso significa? Significa que aminoácidos iguais irão ser associados à uma posição na sequência. Por exemplo se na posição 4 há um **V** (valina) para a maioria das sequências, as sequências sem **V** serão adcionados um traço "-" , e isso será lido posteriormente como uma variação da proteína.
+
+Para isso usaremos o programa [MAFFT](https://pmc.ncbi.nlm.nih.gov/articles/PMC3603318/). Este programa ja foi [baixado](https://mafft.cbrc.jp/alignment/software/linuxportable.html). Pode verificar no diretório de programas.
+```
+$ ls ../programas/
+ncbi-blast-2.17.0+/  mafft-7.526-linux/  iqtree-3.0.1-Linux/
+```
+Agora vamos rodas o `mafft`:
 ```
 $ mkdir output
 $ mafft --maxiterate 1000 --globalpair --reorder [arquivo_resgatado].fasta > output/[arquivo_resgatado].aligned.fasta
+```
+
+Podemos agora analisar esse alinhamento (pode entrar no `diretório` `out` ou continuar no seu `diretório`)
+```
+$ cd output # este passo é opcional, você pode checar todas essas informações do diretório anterior
+$ ls -h [arquivo_resgatado].aligned.fasta; grep -c '>' [arquivo_resgatado].aligned.fasta; grep -c '^M' [arquivo_resgatado].aligned.fasta; wc -l [arquivo_resgatado].aligned.fasta; head [arquivo_resgatado].aligned.fasta
+```
+***
+#### Checagem do alinhamento (ESTE PASSO É EXTRA, FAÇA SOMENTE SE HOUVER TEMPO)
+Após o alinhamento, as posições 
+***
+#### Construção de uma árvore por similaridade (IQTree)
+Próximo passo iremos ver o quão relacionada estão essas sequências através da similaridade que eles apresentam . O programa novamente esta [baixado](https://iqtree.github.io/) e só deveremos rodar a linha de comando. Este programa necessita um arquivo fasta alinhado globalmente, gerado pelo `mafft`. Poderiam ter usado outros programas para alinhamento, mas alguns não gerão o arquivo fasta.
+
+
+
+```
+$ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -i *.aligned.fasta -o 
 ```
