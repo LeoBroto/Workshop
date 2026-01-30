@@ -145,9 +145,9 @@ Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.
 $ ../programas/blast2.09+n/bin/blastp -query [arquivo].fasta -db ~/tutorial_workshop/eukaria_protein.fasta -max_target_seqs 30 -outfmt 6 -evalue 1e-30 -out BLAST-[protein].out
 ```
 
-Pode obsverar que o `[comando]` é `blastp`, as `-[opções]` são  `-out`, `-query`, `db`, `outfmt`, `max_target_seqs` e o `[objeto]` esta definido na `-[opção]` `-query`.
+Pode obsverar que o "comando" é `blastp`, as "-opções" são  `-out`, `-query`, `db`, `outfmt`, `max_target_seqs` e o "objeto" esta definido na "-opção" `-query`.
 
-Utilizamos 
+Utilizamos uma opção que limita para ter 30 sequencias no máximo, se não haveria uma tabale gigante.
 
 Inspecione o arquivo gerado: `BLAST-[protein].out`
 > Como ele não é grande vamos usar o `cat`
@@ -157,12 +157,22 @@ $ head BLAST-[protein].out
 qseqid sseqid % length mismatch gapopen qstart qend sstart send evalue bitscore
 ```
 
-Veja que temos 12 colunas dessa [tabela](https://www.metagenomics.wiki/tools/blast/blastn-output-format-6) (leia sobre ela). 
+Veja que temos 12 colunas dessa [tabela](https://www.metagenomics.wiki/tools/blast/blastn-output-format-6) (leia sobre ela). E precisamos pegar então as sequências que são similares a aquela proteína que foi escolhida. Usaremos um outro comando, e após isso usaremos um script já pronto `catch_genes.sh`:
+```
+$ awk '{print $2}' BLAST-[protein].out | uniq > list_of_sequences.txt
+$ wc -l list_of_sequences.txt
+30
+```
+Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[
+```
+$ nano catch_genes.sh
+```
+
+
 ***
 #### Alinhamento global
-Apos a seleção de 
+Após a seleção dessas sequências
 ```
+$ mkdir output
 $ mafft --maxiterate 1000 --globalpair --reorder [arquivo_resgatado].fasta > output/[arquivo_resgatado].aligned.fasta
 ```
-
-
