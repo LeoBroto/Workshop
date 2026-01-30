@@ -31,4 +31,3 @@ END {
     warn "Searched $s_read FASTA records.\nFound $s_wrote IDs out of $num_ids in the ID list.\n"
 }
 ' all_proteins.fasta [input].txt > [output].fasta;
-' Genes_total $file > Gene_of_specie_$file;
