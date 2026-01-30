@@ -88,20 +88,20 @@ Agora inspecionaremos o arquivo fasta com um pouco mais de detalhes. Contaremos 
 $ grep -c ">" eukaria_protein.fasta
 574627
 $ grep -c "^M" eukaria_protein.fasta
-
+559763
 $ wc -l eukaria_protein.fasta
-1149254
+1149254 all_proteins.fasta
 ```
 
 OU
 
 ```
 $ grep ">" eukaria_protein.fasta | wc -l
-1257723
+574627
 $ grep "^M" eukaria_protein.fasta | wc -l
-1257723
+559763
 $ wc -l eukaria_protein.fasta
-1257723
+1149254 all_proteins.fasta
 ```
 
 O primeiro comando conta automaticamente o numero de linhas que apresentam o sinal '>' e o segundo comando seleciona as linhas que apresentam '>' - ou seja, ele seleciona os 'headers', e DEPOIS conta o número de linhas total do comando anterior. Só é possivel isso pois utilizamos o 'pipe' `|` - significa 'tubo'  ou 'cano' - portanto o resultado (output) do `grep` entra em um cano e segue automaticametne para o proximo comando.
