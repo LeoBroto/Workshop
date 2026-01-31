@@ -1,7 +1,7 @@
 ### Introdução os tipos de arquivos
 * Power-point
 ### Maiores bancos de dados para Bioinformática
-| Tipo de arquivos | Nome do banco de dados | Conteudo | website |
+| Tipo de dado | Nome do banco de dados | Conteudo | website |
 |------------------------|:------------------------------:|---------------------------------------------------------------------------:|-------------------------------------:|
 | Genome & Sequence Databases | NCBI (GenBank/RefSeq/dbSNP) | DNA/RNA sequences, reference genomes, variants, and literature | [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)|
 |  | EMBL-EBI / ENA | European archive for nucleotide and genome data | [https://www.ebi.ac.uk/ena/](https://www.ebi.ac.uk/ena/browser/home)| 
