@@ -207,6 +207,7 @@ Próximo passo iremos ver o quão relacionada estão essas sequências através 
 | HyPhy | fasta | [https://hyphy.org/](https://hyphy.org/)|
 | MEGA | fasta | [https://megasoftware.net/docs](https://megasoftware.net/web_help_12/index.htm#t=Part_I_Getting_Started%2FA_Walk_Through_MEGA%2FAligning_Sequences.htm%23bc-1&rhtocid=_7_3_1)|
 | MACSE | fasta | [https://www.agap-ge2pop.org/macse/](https://www.agap-ge2pop.org/alignsequences/)|
+| ClustalW | fasta | [https://www.genome.jp/tools-bin/clustalw](https://www.genome.jp/tools-bin/clustalw)|
 | MUSCLE | clustal | [https://www.drive5.com/muscle/](https://www.drive5.com/muscle5/manual/getting_started.html)|
 | MINIMAP2 | sam | [https://github.com/lh3/minimap2](https://github.com/lh3/minimap2)|
 
