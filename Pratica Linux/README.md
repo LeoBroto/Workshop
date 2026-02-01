@@ -167,8 +167,8 @@ Inspecione o arquivo gerado: `BLAST-[protein].out`
 > Como ele não é grande vamos usar o `cat`
 ```
 $ ls -lh BLAST-[protein].out ; wc -l BLAST-[protein].out ; head BLAST-[protein].out
-1      2      3  4      5        6      7       8    9      10  11     12
-qseqid sseqid % length mismatch gapopen qstart qend sstart send evalue bitscore
+1    2        3 4           5             6     7      8   9      10  11     12
+prot sequence % comprimento incongruencia Nº'-' inicio fim inicio fim evalue pontuação
 ```
 
 Veja que temos 12 colunas dessa [tabela](https://www.metagenomics.wiki/tools/blast/blastn-output-format-6) (leia sobre ela). E precisamos pegar então as sequências que são similares a aquela proteína que foi escolhida. Usaremos um outro comando, e após isso usaremos um script já pronto `catch_genes.sh`:
@@ -183,7 +183,7 @@ Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt`
 $ nano catch_genes.sh
 $ ./catch_genes.sh
 Searched 574627 FASTA records.
-Found 30 IDs out of 30  in the ID list
+Found 30 IDs out of 30 in the ID list
 $ ls -h sequencies_of_[protein].fasta; grep -c '>' sequencies_of_[protein].fasta; grep -c '^M' sequencies_of_[protein].fasta; wc -l sequencies_of_[protein].fasta; head sequencies_of_[protein].fasta
 ```
 
@@ -200,17 +200,40 @@ ncbi-blast-2.17.0+/  mafft-7.526-linux/  iqtree-3.0.1-Linux/
 Agora vamos rodas o `mafft`:
 ```
 $ mkdir output
-$ mafft --maxiterate 1000 --globalpair --reorder [arquivo_resgatado].fasta > output/[arquivo_resgatado].aligned.fasta
+$ mafft --maxiterate 1000 --globalpair --reorder sequencies_of_[protein].fasta > output/sequencies_of_[protein].aligned.fasta
 ```
 
 Podemos agora analisar esse alinhamento (pode entrar no `diretório` `out` ou continuar no seu `diretório`)
 ```
 $ cd output # este passo é opcional, você pode checar todas essas informações do diretório anterior
-$ ls -h [arquivo_resgatado].aligned.fasta; grep -c '>' [arquivo_resgatado].aligned.fasta; grep -c '^M' [arquivo_resgatado].aligned.fasta; wc -l [arquivo_resgatado].aligned.fasta; head [arquivo_resgatado].aligned.fasta
+$ ls -h sequencies_of_[protein].aligned.fasta; grep -c '>' sequencies_of_[protein].aligned.fasta; grep -c '^M' sequencies_of_[protein].aligned.fasta; wc -l sequencies_of_[protein].aligned.fasta; head sequencies_of_[protein].aligned.fasta
 ```
 ***
 #### Checagem do alinhamento (ESTE PASSO É EXTRA, FAÇA SOMENTE SE HOUVER TEMPO)
-Após o alinhamento, as posições 
+Após o alinhamento, podemos checar de vários jeitos se deu certo ou nâo. Um dos jeitos que eu gosto de checar é contando se o número de cabeçalhos bate com com o número do tamanho das sequências. Ou seja, construiremos um novo arquivo com o cabeçalho da sequencie o comprimento da sequencia substituindo o conteudo.
+Por exemplo:
+```
+>Gsera|XP_033779291.1 | >Gsera|XP_033779291.1
+ATGCGATAGCGATCG...    | 2754
+>Munic|XP_030043466.1 | >Munic|XP_030043466.1
+ATGGAGAGTGAGGAA...    | 1653
+>Munic|XP_030043465.1 | >Munic|XP_030043465.1
+ATGAGCCGATCGAGC...    | 1998
+>Munic|XP_030043464.1 | >Munic|XP_030043464.1
+ATGGAGGAGATTCTA...    | 2034
+>Xlaev|XP_041429787.1 | >Xlaev|XP_041429787.1
+ATGGAGTGACCACGA...    | 1935
+```
+No caso de um fasta alinhado, todos esses comprimentos são iguais. Portanto iremos contar o número de comprimentos que sejam iguais.
+
+Vamos utilizar outro script que pode-se encontrar aqui no github chamado "fasta_length.sh"
+```
+$ nano fasta_lenght.sh
+$ ./fasta_lenght.sh
+$ grep -c '>' length_of_*.fasta ; grep -c '[comprimento]' lentgh_of_*.fasta 
+```
+Se os números forem iguais, significa que deu certo.
+
 ***
 #### Construção de uma árvore por similaridade (IQTree)
 Próximo passo iremos ver o quão relacionada estão essas sequências através da similaridade que eles apresentam . O programa novamente esta [baixado](https://iqtree.github.io/) e só deveremos rodar a linha de comando. Este programa necessita um arquivo fasta alinhado globalmente, gerado pelo `mafft`. Poderiam ter usado outros programas para alinhamento, mas alguns não gerão o arquivo fasta.
