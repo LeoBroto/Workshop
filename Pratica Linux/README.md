@@ -126,8 +126,18 @@ Vamos iniciar e baixar nossa proteina de interesse no site do NCBI.
 
 ⚠️ Agora importante se certificar que a proteina a ser baixada está no diretório que será trabalhado e com algum nome que seja útil e informativo para você. Portanto vamos renomear, caso necessário, e mover o arquivo até o diretório `tutorial-workshop`
 
-Vai até o site do [NCBI](https://www.ncbi.nlm.nih.gov/protein/), e procura na aba de pesquisa pela proteina X e clique na aba Y e com o botão esquerdo clique e copie o link do arquivo.
-Cole junto ao comando `wget`
+Vai até o site do [NCBI](https://www.ncbi.nlm.nih.gov/protein/), e procura na aba de pesquisa pela proteina "Histone [nome_de_uma_espécie]", ou qualquer outra proteina que voce conheça, de preferença uma proteina bem estudada. Clique no botão `FASTA` a baixdo e então copie o conteudo e vamos colar em um arquivo.
+
+Para criar um arquivo usamos o comando `touch`. E para edita-lo usamos o comando `nano`
+> Obs1: geralmente usamos o nano diretamente em um arquivo não existente, pois ele já cria automaticamente, pulando o comando touch
+
+> Obs2: para sair do `nano` utilize `Ctrl` + `X` => y + `ENTER`
+```
+$ touch [proteina_espécie].fasta
+$ nano [proteina_espécie].fasta
+```
+
+Caso você consiga o link do arquivo que apresenta a sequência, pode baixar com comando `wget`
 ```
 $ wget [link]
 ```
@@ -141,19 +151,23 @@ $ mv [arquivo] -t [diretório]
 #### Alinhamento local (BLAST)
 Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) diretamente no computador com o comando `wget`), para alinhar as proteínas que queremos adquirir com a proteína alvo. Nesta etapa vale a pena e pesquisar e [ler um pouco sobre](https://pmc.ncbi.nlm.nih.gov/articles/PMC441573/). Utilizaremos o comando `blastp` para alinhar proteína com todas as outras proteínas.
 
+Primeiramente, devemos criar um banco com o comando `makeblastdb`. Para isso vamos criar um novo diretório (`mkdir`), copiar o arquivo fasta de proteinas neste diretório criado, e depois utilizar o comando no arquivo clonado.
+
 ```
-$ ../programas/blast2.09+n/bin/blastp -query [arquivo].fasta -db ~/tutorial_workshop/eukaria_protein.fasta -max_target_seqs 30 -outfmt 6 -evalue 1e-30 -out BLAST-[protein].out
+$ mkdir database/ ; cp all_proteins.fasta database/
+$ makeblastdb -in database/all_proteins.fasta -out database/ -dbtype prot
+$ ../programas/blast2.09+n/bin/blastp -query [proteina_espécie].fasta -db database/all_proteins.fasta -outfmt 6 -evalue 1e-15 -out BLAST-[protein].out
 ```
 
-Pode obsverar que o "comando" é `blastp`, as "-opções" são  `-out`, `-query`, `db`, `outfmt`, `max_target_seqs` e o "objeto" esta definido na "-opção" `-query`.
+Pode obsverar que o "comando" é `blastp`, as "-opções" são  `-out`, `-query`, `db`, `outfmt` e o "objeto" esta definido na "-opção" `-query`.
 
-Utilizamos uma opção que limita para ter 30 sequencias no máximo, se não haveria uma tabale gigante.
+Podemos utilizar uma opção que limita para ter 30 sequencias no máximo `max_target_seqs`, para não ter uma tabela gigante.
 
 Inspecione o arquivo gerado: `BLAST-[protein].out`
 > Como ele não é grande vamos usar o `cat`
 ```
-$ ls -lh BLAST-[protein].out
-$ head BLAST-[protein].out
+$ ls -lh BLAST-[protein].out ; wc -l BLAST-[protein].out ; head BLAST-[protein].out
+1      2      3  4      5        6      7       8    9      10  11     12
 qseqid sseqid % length mismatch gapopen qstart qend sstart send evalue bitscore
 ```
 
@@ -161,7 +175,6 @@ Veja que temos 12 colunas dessa [tabela](https://www.metagenomics.wiki/tools/bla
 ```
 $ awk '{print $2}' BLAST-[protein].out | uniq > list_of_sequences.txt
 $ wc -l list_of_sequences.txt
-30
 ```
 Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt` pela sua lista `list_of_sequences.txt` e o `[output].fasta` por `sequencies_of_[protein].fasta`. E depois rodar o script. Para rodar o tem que se utilizar `./`.
 
@@ -169,8 +182,8 @@ Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt`
 ```
 $ nano catch_genes.sh
 $ ./catch_genes.sh
-Sequencies in 574627
-Search in 30 found 30
+Searched 574627 FASTA records.
+Found 30 IDs out of 30  in the ID list
 $ ls -h sequencies_of_[protein].fasta; grep -c '>' sequencies_of_[protein].fasta; grep -c '^M' sequencies_of_[protein].fasta; wc -l sequencies_of_[protein].fasta; head sequencies_of_[protein].fasta
 ```
 
