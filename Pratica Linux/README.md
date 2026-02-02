@@ -61,6 +61,8 @@ Percebe-se que há dois script (verde) de final ".sh" e um fasta. Utilizaremos u
 ### Inspecionar os arquivos
 Agora vamos inspecionar os arquivos. O tamanho já nos foi dado, precisamos ver o conteudo. Para inspecionar os arquivos temos diversos comandos: `head`, `tail`, `more`, `less`, `cat`, `tac` ... Cada um com suas especificidades. 
 
+Este arquivo de proteinas foi baixada do site [UniProt](https://www.uniprot.org/uniprotkb). São as proteínas de todos os organismos vivos. Vamos trabalhar com um fasta com muitas sequências, todas proteínas, porém poderia ser um genoma, um trasncriptoma, sequencias codificadoras, etc...
+
 :warning: Procure não usar o `cat` ou `tac` para arquivos muito grandes :warning:
 
 ``` 
@@ -76,6 +78,7 @@ MYQAINPCPQSWYGSPQLEREIVCKMSGAPHYPNYYPVHPNALGGAWFDTSLNARSLTTTPSLTTCTPPSLAACTPPTSL
 >sp|Q6GZX2|003R_FRG3G Uncharacterized protein 3R OS=Frog virus 3 (isolate Goorha) OX=654924 GN=FV3-003R PE=3 SV=1
 MARPLLGKTSSVRRRLESLSACSIFFFLRKFCQKMASLVFLNSPVYQMSNILLTERRQVDRAMGGSDDDGVMVVALSPSDFKTVLGSALLAVERDMVHVVPKYLQTPGILHDMLVLLTPIFGEALSVDMSGATDVMVQQIATAGFVDVDPLHSSVSWKDNVSCPVALLAVSNAVRTMMGQPCQVTLIIDVGTQNILRDLVNLPVEMSGDLQVMAYTKDPLGKVPAVGVSVFDSGSVQKGDAHSVGAPDGLVSFHTHPVSSAVELNYHAGWPSNVDMSSLLTMKNLMHVVVAEEGLWTMARTLSMQRLTKVLTDAEKDVMRAAAFNLFLPLNELRVMGTKDSNNKSLKTYFEVFETFTIGALMKHSGVTPTAFVDRRWLDNTIYHMGFIPWGRDMRFVVEYDLDGTNPFLNTVPTLMSVKRKAKIQEMFDNMVSRMVTS
 ```
+> Caso queira pode verificar a [tabela de proteínas](https://www.hgmd.cf.ac.uk/docs/cd_amino.html) e suas siglas.
 
 OU
 
@@ -120,6 +123,7 @@ O primeiro comando conta automaticamente o numero de linhas que apresentam o sin
 
 Agora inspecione com `cat` os arquivos `*.sh` (**Shell**). Pode observar que ambos tem um cabeçalho único: `#!/bin/bash`.
 Esta linha exige que o arquivo seja lido pelo computador de um jeito especial. E isso trasnforma os arquivos textos em "scripts".
+
 ***
 ### Baixar os arquivos
 Vamos iniciar e baixar nossa proteina de interesse no site do NCBI.
@@ -151,7 +155,7 @@ $ mv [arquivo] -t [diretório]
 ### Alinhamento local (BLAST)
 Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) diretamente no computador com o comando `wget`), para alinhar as proteínas que queremos adquirir com a proteína alvo. Nesta etapa vale a pena e pesquisar e [ler um pouco sobre](https://pmc.ncbi.nlm.nih.gov/articles/PMC441573/). Utilizaremos o comando `blastp` para alinhar proteína com todas as outras proteínas.
 
-Primeiramente, devemos criar um banco com o comando `makeblastdb`. Para isso vamos criar um novo diretório (`mkdir`), copiar o arquivo fasta de proteinas neste diretório criado, e depois utilizar o comando no arquivo clonado.
+Primeiramente, devemos criar um banco com o comando `makeblastdb` do programa BLAST. Para isso vamos criar um novo diretório (`mkdir`), copiar o arquivo fasta de proteinas neste diretório criado, e depois utilizar o comando no arquivo clonado.
 
 ```
 $ mkdir database/ ; cp all_proteins.fasta database/
