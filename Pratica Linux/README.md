@@ -187,7 +187,6 @@ Found 30 IDs out of 30 in the ID list
 $ ls -h sequencies_of_[protein].fasta; grep -c '>' sequencies_of_[protein].fasta; grep -c '^M' sequencies_of_[protein].fasta; wc -l sequencies_of_[protein].fasta; head sequencies_of_[protein].fasta
 ```
 
-
 ***
 ### Alinhamento global (MAFFT)
 Após a seleção dessas sequências, vamos fazer o alinhamento de todas elas aminoácido por aminoácido. E o que isso significa? Significa que aminoácidos iguais irão ser associados à uma posição na sequência. Por exemplo se na posição 4 há um **V** (valina) para a maioria das sequências, as sequências sem **V** serão adcionados um traço "-" , e isso será lido posteriormente como uma variação da proteína.
@@ -227,11 +226,16 @@ ATGGAGTGACCACGA...    | 1935
 ```
 **No caso de um fasta alinhado, todos esses comprimentos são iguais**. Portanto iremos contar o número de comprimentos que sejam iguais.
 
-Vamos utilizar outro script que pode-se encontrar aqui no [github](https://github.com/211295/Workshop) chamado "fasta_length.sh"
+Vamos utilizar outro script que pode-se encontrar aqui no [github]([https://github.com/211295/Workshop](https://github.com/211295/Workshop/blob/main/Pratica%20Linux/fasta_length.sh)) chamado "fasta_length.sh"
 ```
 $ nano fasta_lenght.sh ; chmod +x fasta_lenght.sh
 $ ./fasta_lenght.sh
-$ grep -c '>' length_of_*.fasta ; grep -c '[comprimento]' lentgh_of_*.fasta 
+$ head -n 2 length_of_*.fasta
+>Gsera|XP_033779291.1
+2754 ## este é o comprimento
+$ grep -c '>' length_of_*.fasta ; grep -c '[comprimento]' lentgh_of_*.fasta
+91
+91
 ```
 Se os números forem iguais, significa que deu certo.
 
@@ -249,7 +253,7 @@ Próximo passo iremos ver o quão relacionada estão essas sequências através 
 | MINIMAP2 | sam | [https://github.com/lh3/minimap2](https://github.com/lh3/minimap2)|
 
 ```
-$ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -i *.aligned.fasta -o 
+$ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -s sequencies_of_[protein].aligned.fasta -mem 60G --threads-max 12 -m MFP -B 1000
 ```
 Agora verifique os outputs , utilize os comandos que você ja aprendeu `ls`, `cat`, `head`, `more`, `wc`...
 
