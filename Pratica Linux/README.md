@@ -126,7 +126,7 @@ Vamos iniciar e baixar nossa proteina de interesse no site do NCBI.
 
 ⚠️ Agora importante se certificar que a proteina a ser baixada está no diretório que será trabalhado e com algum nome que seja útil e informativo para você. Portanto vamos renomear, caso necessário, e mover o arquivo até o diretório `tutorial-workshop`
 
-Vai até o site do [NCBI](https://www.ncbi.nlm.nih.gov/protein/), e procura na aba de pesquisa pela proteina "Histone [nome_de_uma_espécie]", ou qualquer outra proteina que voce conheça, de preferença uma proteina bem estudada. Clique no botão `FASTA` abaixo e então copie o conteudo e vamos colar em um arquivo.
+Vá até o site do [NCBI](https://www.ncbi.nlm.nih.gov/protein/), e procure na aba de pesquisa pela proteina "Histone [nome_de_uma_espécie]", ou qualquer outra proteina que você conheça, de preferença uma proteina bem estudada. Clique no botão `FASTA` abaixo e então copie o conteudo e vamos colar em um arquivo.
 
 Para criar um arquivo usamos o comando `touch`. E para edita-lo usamos o comando `nano`
 > Obs1: geralmente usamos o nano diretamente em um arquivo não existente, pois ele já cria automaticamente, pulando o comando touch
