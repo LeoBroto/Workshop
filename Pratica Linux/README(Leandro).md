@@ -38,6 +38,11 @@ $ ls -lash
 
 Interessante notar que as opções dos comandos não tem ordem correta, somente em alguns poucos casos onde uma opção tem que obrigatóriamente vir antes de outra.
 
+Sua tela deve estar cheias de comandos, não é? Agora tente o comando e veja o que acontece.
+```
+$ clear
+```
+Agora tente usar alguma forma do comando ls de novo.
 Encontrou o diretório chamado `tutorial_workshop`? Vamos utilizar então agora um PADRÃO de comando que irá se repetir
 ```
 [comando] -[opção] [objeto]
@@ -51,12 +56,22 @@ catch_genes.sh all_proteins.fasta transform_single_line_fasta.sh
 
 > Se quiser, pode usar o mesmo comando no outro diretório para ver qual o conteudo.
 
-Agora entramemos no `diretório` chamado `tutorial_workshop`. Se fosse um computador com interface gráfica você clicaria duas vezes na pasta para entrar nela, mas no nosso caso será em linha de comando, ao mesmo tempo que já mostraremos o conteudo dela. So é possivel por conta do `;`, pois o computador entende que isso seria uma linha nova:
+Agora entramemos no `diretório` chamado `tutorial_workshop`. Se fosse um computador com interface gráfica você clicaria duas vezes na pasta para entrar nela, mas no nosso caso será em linha de comando, ao mesmo tempo que já mostraremos o conteudo dela. 
+``` 
+$ cd tutorial_workshop
+```
+
+O Linux possui atalhos para facilitar a acessar ou sair de pastas. Para voltar a pasta anterior, use "dois pontos", assim:
+``` 
+$ cd ..
+```
+
+É possivel entrar e ver o que tem na pasta rapidamente. Use `;`, pois o computador entende que isso seria uma linha nova:
 ``` 
 $ cd tutorial_workshop ; ls -lh
 ```
 
-Percebe-se que há dois script (verde) de final ".sh" e um fasta. Utilizaremos um `catch_genes.sh` para recuperarmos as sequências do arquivo fasta das proteinas de Eukariotos.
+Percebe-se que há dois script (verde) de final ".sh" e um fasta. Utilizaremos um `catch_genes.sh` para recuperarmos as sequências do arquivo fasta das proteinas de eucariotos.
 ***
 ### Inspecionar os arquivos
 Agora vamos inspecionar os arquivos. O tamanho já nos foi dado, precisamos ver o conteudo. Para inspecionar os arquivos temos diversos comandos: `head`, `tail`, `more`, `less`, `cat`, `tac` ... Cada um com suas especificidades. 
@@ -97,11 +112,11 @@ $ [comando] --help
 Agora inspecionaremos o arquivo fasta com um pouco mais de detalhes. Contaremos quantas sequencias há no arquivo `fasta`. Cada início de sequência tem seu cabeçalho iniciado por `>___` e na linha de baixo o conteudo da sequência. Iremos tambem calcular quantas linhas INICIAM com o aminoacido `Metionina` e a quantidade de linhas totais no arquivo. E ai qual o resultado? Discuta o por quê disso.
 
 ```
-$ grep -c ">" eukaria_protein.fasta
+$ grep -c ">" all_protein.fasta
 574627
-$ grep -c "^M" eukaria_protein.fasta
+$ grep -c "^M" all_protein.fasta
 559763
-$ wc -l eukaria_protein.fasta
+$ wc -l all_protein.fasta
 1149254 all_proteins.fasta
 ```
 
@@ -149,41 +164,70 @@ $ mv [arquivo] -t [diretório]
 ```
 ***
 ### Alinhamento local (BLAST)
-Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) diretamente no computador com o comando `wget`), para alinhar as proteínas que queremos adquirir com a proteína alvo. Nesta etapa vale a pena e pesquisar e [ler um pouco sobre](https://pmc.ncbi.nlm.nih.gov/articles/PMC441573/). Utilizaremos o comando `blastp` para alinhar proteína com todas as outras proteínas.
+Agora iremos rodar o primeiro programa, o BLAST ([baixado](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). Este link vai abrir uma lista direto do site do NCBI. CLique com o botão direito e depois 'Copiar Link' da versão mais recente com o sulfixo ".tar.gz". Isso significa que o programa está compactado. Vamos baixar diretamente no computador com o comando `wget` e depois para alinhar as proteínas que queremos adquirir com a proteína alvo. Nesta etapa vale a pena e pesquisar e [ler um pouco sobre](https://pmc.ncbi.nlm.nih.gov/articles/PMC441573/). Utilizaremos o comando `blastp` para alinhar proteína com todas as outras proteínas.
 
-Primeiramente, devemos criar um banco com o comando `makeblastdb`. Para isso vamos criar um novo diretório (`mkdir`), copiar o arquivo fasta de proteinas neste diretório criado, e depois utilizar o comando no arquivo clonado.
+Use os comando que aprendeu para navegar entre os diretórios e crie uma pasta chamada 'Programas'. Entre nesta pasta e use o comando
+```
+wget [ link copiado ] ; tar -xzvf ncbi-*.tar.gz
+```
+
+Primeiramente, devemos criar um banco com o comando `makeblastdb`. Para isso vamos voltar a pasta principal e criar um novo diretório (comando `mkdir`), copiar o arquivo fasta de proteinas neste diretório criado, e depois utilizar o comando no arquivo clonado.
 
 ```
 $ mkdir database/ ; cp all_proteins.fasta database/
-$ makeblastdb -in database/all_proteins.fasta -out database/ -dbtype prot
-$ ../programas/blast2.09+n/bin/blastp -query [proteina_espécie].fasta -db database/all_proteins.fasta -outfmt 6 -evalue 1e-15 -out BLAST-[protein].out
+$ makeblastdb -in database/all_proteins.fasta -out database/all_proteinsDB -dbtype prot
+$ blastp -query [proteina_espécie].fasta -db database/all_proteinsDB -outfmt 6 -evalue 1e-15 -out BLAST-protein.out
 ```
 
 Pode obsverar que o "comando" é `blastp`, as "-opções" são  `-out`, `-query`, `db`, `outfmt` e o "objeto" esta definido na "-opção" `-query`.
 
+É valido mencionar que existem vários tipos de "BLASTs":
+BLASTn = Usa referencias de nucleotídeos, como DNA e RNA.
+BLASTp = Usa referencias de proteínas (estamos usando este!).
+BLASTx = Usa referencias de proteínas, com sequencias de nucleotídeos. Tem uma etapa a mais de tradução.
+tBLASTx =Usa referencias de nucleotídeos, com sequencias de proteíneas. Tem uma etapa a mais de "destradução".
+
 Podemos utilizar uma opção que limita para ter 30 sequencias no máximo `max_target_seqs`, para não ter uma tabela gigante.
 
-Inspecione o arquivo gerado: `BLAST-[protein].out`
-> Como ele não é grande vamos usar o `cat`
 ```
-$ ls -lh BLAST-[protein].out ; wc -l BLAST-[protein].out ; head BLAST-[protein].out
-1    2        3 4           5             6     7      8   9      10  11     12
-prot sequence % comprimento incongruencia Nº'-' inicio fim inicio fim evalue pontuação
+$ blastp -query [proteina_espécie].fasta -db database/all_proteinsDB -outfmt 6 -evalue 1e-15 -max_target_seqs 30 -out BLAST-protein.out
+```
+
+Inspecione o arquivo gerado: `BLAST-protein.out`
+> Como ele não é grande vamos usar o `head`
+```
+$ head BLAST-protein.out
+
+Cada coluna significa algo:
+1 sua proteína (query)
+2 sequencia que deu "match" no banco de dados (referência)
+3 % de identidade
+4 comprimento
+5 "mismatches" ou incongruência
+6 número de gaps
+7 ponto de início que o query que se alinhama
+8 ponto final que o query que se alinhama
+9  ponto de início que a referência se alinhama
+10 ponto final que a referência se alinhama
+11 "e-value" ou confiabilidade
+12 "bitscore" ou pontuação
 ```
 
 Veja que temos 12 colunas dessa [tabela](https://www.metagenomics.wiki/tools/blast/blastn-output-format-6) (leia sobre ela). E precisamos pegar então as sequências que são similares a aquela proteína que foi escolhida. Usaremos um outro comando, e após isso usaremos um script já pronto `catch_genes.sh`:
 ```
-$ awk '{print $2}' BLAST-[protein].out | uniq > list_of_sequences.txt
+$ awk '{print $2}' BLAST-protein.out | uniq > list_of_sequences.txt
 $ wc -l list_of_sequences.txt
 ```
 Então, precisamos editar o `catch_genes.sh`: precisa substituir o `[input].txt` pela sua lista `list_of_sequences.txt` e o `[output].fasta` por `sequencies_of_[protein].fasta`. E depois rodar o script. Para rodar o tem que se utilizar `./`.
 
-🕯️ Relembre que para sair do `nano` utilize `Ctrl` + `X` => y 
+🕯️ Relembre que para sair do `nano` utilize `Ctrl` + `X`. O programa vai perguntar se deseja salvar as mudanças. Para confirmar, use 'y' e Enter 
 ```
 $ nano catch_genes.sh
 $ ./catch_genes.sh
+
 Searched 574627 FASTA records.
 Found 30 IDs out of 30 in the ID list
+
 $ ls -h sequencies_of_[protein].fasta; grep -c '>' sequencies_of_[protein].fasta; grep -c '^M' sequencies_of_[protein].fasta; wc -l sequencies_of_[protein].fasta; head sequencies_of_[protein].fasta
 ```
 
@@ -230,7 +274,7 @@ Vamos utilizar outro script que pode-se encontrar aqui no github chamado "fasta_
 ```
 $ nano fasta_lenght.sh ; chmod +x fasta_lenght.sh
 $ ./fasta_lenght.sh
-$ grep -c '>' length_of_*.fasta ; grep -c '[comprimento]' lentgh_of_*.fasta 
+$ grep -v '>' length_of_*.fasta | grep -c 
 ```
 Se os números forem iguais, significa que deu certo.
 
@@ -248,7 +292,7 @@ Próximo passo iremos ver o quão relacionada estão essas sequências através 
 | MINIMAP2 | sam | [https://github.com/lh3/minimap2](https://github.com/lh3/minimap2)|
 
 ```
-$ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -i *.aligned.fasta -o 
+$ ../programas/ncbi-blast-2.17.0+/bin/iqtree3 -s *.fasta.iqtree
 ```
 Agora verifique os outputs , utilize os comandos que você ja aprendeu `ls`, `cat`, `head`, `more`, `wc`...
 
