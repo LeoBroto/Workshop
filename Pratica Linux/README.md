@@ -197,7 +197,7 @@ Para isso usaremos o programa [MAFFT](https://pmc.ncbi.nlm.nih.gov/articles/PMC3
 $ ls ../programas/
 ncbi-blast-2.17.0+/  mafft-7.526-linux/  iqtree-3.0.1-Linux/
 ```
-Agora vamos rodas o `mafft`:
+Agora vamos rodar o `mafft`:
 ```
 $ mkdir output
 $ mafft --maxiterate 1000 --globalpair --reorder sequencies_of_[protein].fasta > output/sequencies_of_[protein].aligned.fasta
@@ -213,6 +213,7 @@ $ ls -h sequencies_of_[protein].aligned.fasta; grep -c '>' sequencies_of_[protei
 Após o alinhamento, podemos checar de vários jeitos se deu certo ou nâo. Um dos jeitos que eu gosto de checar é contando se o número de cabeçalhos bate com com o número do tamanho das sequências. Ou seja, construiremos um novo arquivo com o cabeçalho da sequencie o comprimento da sequencia substituindo o conteudo.
 Por exemplo:
 ```
+input.fasta           | length.fasta
 >Gsera|XP_033779291.1 | >Gsera|XP_033779291.1
 ATGCGATAGCGATCG...    | 2754
 >Munic|XP_030043466.1 | >Munic|XP_030043466.1
@@ -224,9 +225,9 @@ ATGGAGGAGATTCTA...    | 2034
 >Xlaev|XP_041429787.1 | >Xlaev|XP_041429787.1
 ATGGAGTGACCACGA...    | 1935
 ```
-No caso de um fasta alinhado, todos esses comprimentos são iguais. Portanto iremos contar o número de comprimentos que sejam iguais.
+**No caso de um fasta alinhado, todos esses comprimentos são iguais**. Portanto iremos contar o número de comprimentos que sejam iguais.
 
-Vamos utilizar outro script que pode-se encontrar aqui no github chamado "fasta_length.sh"
+Vamos utilizar outro script que pode-se encontrar aqui no [github](https://github.com/211295/Workshop) chamado "fasta_length.sh"
 ```
 $ nano fasta_lenght.sh ; chmod +x fasta_lenght.sh
 $ ./fasta_lenght.sh
