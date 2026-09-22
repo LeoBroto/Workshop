@@ -2,18 +2,12 @@
 """
 comparar_salmon.py — Minicurso de Bioinformatica, bloco de transcriptomica.
 
-
-Le dois arquivos quant.sf do salmon (controle e tratado/infectado),
+Função: Lê dois arquivos quant.sf do salmon (controle e tratado/infectado),
 agrega os transcritos por simbolo do gene, e gera uma tabela comparativa
 ordenada por inducao.
 
-
-Nao usa nenhuma biblioteca externa: so a biblioteca padrao do Python 3.
-
-
 Uso:
     python3 comparar_salmon.py quant_mock/quant.sf quant_cov2/quant.sf
-
 
 Uso com nomes personalizados para as colunas:
     python3 comparar_salmon.py quant_mock/quant.sf quant_cov2/quant.sf \
