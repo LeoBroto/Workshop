@@ -2,7 +2,7 @@
 ## Toolbox de Bioinformática: ferramentas para análises ômicas
 Criado por Felipe S. Salles || [LinkedIn](https://br.linkedin.com/in/felipe-simionato-salles-b3640120b) || [Lattes](http://lattes.cnpq.br/3781167913621025)
 
-Criado por Leandro Gonçalves || [LinkedIn](https://www.linkedin.com/in/leandro-gon45/) || [Lattes](http://lattes.cnpq.br/3096958278950054)
+Criado por Leandro de Brito Gonçalves || [LinkedIn](https://www.linkedin.com/in/leandro-gon45/) || [Lattes](http://lattes.cnpq.br/3096958278950054)
 
 Monitores: [Sophia Pereira Saraiva](http://lattes.cnpq.br/5576461458658817) e [Bruno J. Teixeira de Melo](http://lattes.cnpq.br/0513855441372488)
 ***
